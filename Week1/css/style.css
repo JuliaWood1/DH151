@@ -1,0 +1,36 @@
+body,html {
+	margin:0;
+	height:100%;
+	width:100%;
+}
+
+/* the hastag indicates an id */
+#map {
+	height: 100%;
+}
+
+body {
+    display: grid;
+	grid-template-rows: 80px 1fr;
+	grid-template-columns: 250px 1fr;
+	grid-template-areas: 
+	"header header"
+	"sidebar content";
+}
+
+/* the dot before header indicates 
+that it is a class */
+.header {
+	grid-area: header;
+	padding:10px;
+    background-color: rgb(237, 73, 252);
+    color:aqua
+}
+.sidebar {
+	grid-area: sidebar;
+	padding:10px;
+    background-color: rgb(142, 118, 228);
+}
+.content {
+	grid-area: content;
+}
