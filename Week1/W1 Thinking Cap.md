@@ -22,5 +22,5 @@ The maps are powered by Esri (Environmental Systems Research Institute) which is
 
 ### If you could change something, what would it be?
 
-I think I would add a map visualization of how race is distributed across the US, this would allow people to see how gerrymandering is correlated with race &  white supremacy in America.
+I think I would add a map visualization of how race is distributed across the US, this would allow people to see how gerrymandering is correlated with race.
 
