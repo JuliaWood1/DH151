@@ -14,7 +14,7 @@ I have been livid about gerrymandering ever since I learned about it in 2017. Th
 
 ### How does the mapping work, and does it “work?” i.e., in your opinion, does it do what it’s supposed to do?
 
-The mapping actually works in a very interesting way, such that when you scroll down the page a bar goes across a map of the United States allowing you to directly compare our existing congressional districts with districts drawn to minimize the distance from each constituent to the center of the district while retaining the the right amount of people in each district. They have map visualizations on everything from compactness to fairness, and at the end individuals can add a dot to the 'Glow of Discontent' map if they feel underrepresented in Congress. 
+The mapping actually works in a very interesting way, such that when you scroll down the page a bar goes across a map of the United States allowing you to directly compare our existing congressional districts with districts drawn to minimize the distance from each constituent to the center of the district while retaining the the right amount of people in each district. They have map visualizations on everything from compactness to fairness, and at the end individuals can add a dot to the 'Glow of Discontent' map if they feel underrepresented in Congress. Yes it definitely works in my opinion, all the information is presented in a digestable way.
 
 ### What technologies does the map use? I.e. Google maps, leaflet, mapbox, etc?
 
@@ -22,5 +22,5 @@ The maps are powered by Esri (Environmental Systems Research Institute) which is
 
 ### If you could change something, what would it be?
 
-Hmmmm.... thinking. 
+I think I would add a map visualization of how race is distributed across the US, this would allow people to see how gerrymandering is correlated with race.
 
