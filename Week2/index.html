@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello World</title>
+	<meta charset="utf-8" />
+
+	<!-- style sheets -->
+	<link rel="stylesheet" href="css/style.css">
+    <!-- file named style.css in folder named css -->
+    <!-- leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> 
+</head>
+<body>
+
+	<div class="header">
+		Julia's Map
+	</div>
+	<div class="sidebar">
+		Important Places!
+		
+		Here is a map of some important places to me.
+	</div>
+	<div class="content">
+		<div id="map"></div>
+	</div>
+    <script>
+        var map = L.map('map').setView([0, 0], 3);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+
+		var markers5 = [
+		{
+			'title':'Hedrick Hall',
+			'description' : 'Where I lived  my freshman year at UCLA',
+			'lat': 34.0735,
+			'lon': -118.4524
+		},
+		{
+			'title':'Kauai',
+			'description' : 'Where my freshman year roommate lives',
+			'lat': 22.0964,
+			'lon': -159.5261
+		},
+		{
+			'title':'Cape Town',
+			'description' : 'Where my family lives in South Africa',
+			'lat': -33.9249,
+			'lon': 18.4241
+		},
+		{
+			'title':'Napa',
+			'description' : 'Where my mom was raised',
+			'lat': 38.2975,
+			'lon': -122.2869
+		},
+		{
+			'title':'Sa Pa, Vietnam',
+			'description' : "My favorite place I've ever vistied",
+			'lat': 22.3364,
+			'lon': 103.8438
+		}
+	]
+
+		// loop through cities
+		markers5.forEach(function(item){
+				L.marker([item.lat,item.lon]).addTo(map).bindPopup(item.title + ": " + item.description).openPopup();
+				console.log('The latitude for ' + item.title + ' is ' + item.lat)
+		});
+    </script>
+    
+
+</body>
+</html>
