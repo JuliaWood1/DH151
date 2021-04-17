@@ -1,0 +1,47 @@
+body,html {
+	margin:0;
+	height:100%;
+	width:100%;
+}
+
+/* the hastag indicates an id */
+#map {
+	height: 100%;
+}
+
+body {
+    display: grid;
+	grid-template-rows: 15% 1fr;
+	grid-template-columns: 230px 1fr;
+	grid-template-areas: 
+	"header header"
+	"sidebar content"; /* sidebar to the left of my content class*/
+}
+
+/* the dot before header indicates 
+that it is a class */
+.header {
+	grid-area: header;
+	padding:10px;
+    background-color: rgb(89, 189, 93);
+    color:rgb(0, 0, 0);
+	font-family: 'Courier New', monospace;
+	font-size: 2em;
+}
+.sidebar {
+	grid-area: sidebar;
+	padding:10px;
+	font-family: 'Courier New', monospace;
+    background-color: rgb(218, 208, 103);
+}
+.content {
+	grid-area: content;
+}
+
+.sidebar-item {
+	padding: 10px;
+	background: gainsboro;
+	border: 1px solid rgb(0, 0, 0);
+	margin: 5px;
+	color: green;
+}
