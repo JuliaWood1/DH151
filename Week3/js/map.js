@@ -32,8 +32,8 @@ var markers5 = [
 	'description' : 'The old national capitol with long boats along the Perfume River and historical palaces and shrines. Also where my sister and I got knock-off North Face backpacks for high school, lol.',
 	'dates': 'June 9th, 2017',
 	'url' : 'hue.jpeg',
-	'lat': 16.0326,
-	'lon': 108.1450
+	'lat': 16.4637,
+	'lon': 107.5909
 },
 {
 	'title':'Da Nang',
@@ -97,7 +97,7 @@ let layers = {
 L.control.layers(null, layers).addTo(map)
 
 // makes it show all the markers
-map.fitBounds(myMarkers.getBounds())
+map.fitBounds(myMarkers.getBounds(), {padding: [100, 100]})
 
 
 function flyToIndex(index){
@@ -109,7 +109,7 @@ var polyline = L.polyline([
 	[21.0278, 105.8342],
 	[22.3364, 103.8438],
 	[20.9101, 107.1839],
-	[16.0326, 108.1450],
+	[16.4637,107.5909],
 	[16.0574417, 108.247475],
 	[15.8801, 108.3380],
 	[10.8231, 106.6297],
