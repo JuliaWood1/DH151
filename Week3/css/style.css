@@ -45,3 +45,13 @@ that it is a class */
 	margin: 5px;
 	color: green;
 }
+
+.sidebar-item:hover {
+	background:rgb(202, 221, 202);
+	border: 4px solid green;
+}
+
+.sidebar-item:active {
+	background: gainsboro;
+	transform: translateY(4px);
+  }
