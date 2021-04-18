@@ -75,7 +75,7 @@ let myMarkers = L.featureGroup();
 // loop through cities
 markers5.forEach(function(item, index){
 		let popup = L.popup().setContent(
-			`<hr>${item.title}<\hr> ${item.description}
+			`<hr>${item.title} : ${item.dates}</hr>  <br /><br />${item.description}
 			<br /> <br /> <img src = ${item.url} width=90%>`
 		);
 		let marker = L.marker([item.lat, item.lon]).addTo(map).bindPopup(popup).openPopup();
