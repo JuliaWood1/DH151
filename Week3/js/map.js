@@ -76,7 +76,7 @@ let myMarkers = L.featureGroup();
 markers5.forEach(function(item, index){
 		let popup = L.popup().setContent(
 			`<hr>${item.title} : ${item.dates}</hr>  <br /><br />${item.description}
-			<br /> <br /> <img src = ${item.url} width=90%>`
+			<br /> <br /> <img src = ${item.url} height=40%  width = 40%>`
 		);
 		let marker = L.marker([item.lat, item.lon]).addTo(map).bindPopup(popup).openPopup();
 		console.log('The latitude for ' + item.title + ' is ' + item.lat)
@@ -101,7 +101,7 @@ map.fitBounds(myMarkers.getBounds(), {padding: [100, 100]})
 
 
 function flyToIndex(index){
-	map.flyTo([markers5[index].lat + 0.1, markers5[index].lon], 12)
+	map.flyTo([markers5[index].lat + 0.03, markers5[index].lon], 12)
 	myMarkers.getLayers()[index].openPopup()
 }
 
