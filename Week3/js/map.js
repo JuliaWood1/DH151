@@ -101,7 +101,7 @@ map.fitBounds(myMarkers.getBounds(), {padding: [100, 100]})
 
 
 function flyToIndex(index){
-	map.flyTo([markers5[index].lat, markers5[index].lon], 12)
+	map.flyTo([markers5[index].lat + 0.01, markers5[index].lon], 12)
 	myMarkers.getLayers()[index].openPopup()
 }
 
