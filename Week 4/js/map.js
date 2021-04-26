@@ -50,7 +50,7 @@ function mapCSV(data){
 	}
 
 	// loop through each entry
-	data.data.forEach(function(item,index){
+	//data.data.forEach(function(item,index){
 		// create a marker
 		//let marker = L.circleMarker([item.Latitude, item.Longitude],circleOptions)
 		//.on('mouseover',function(){
@@ -62,13 +62,13 @@ function mapCSV(data){
 
 		// add entry to sidebar
 		//$('.sidebar').append(`<img src="${item.file}" onmouseover="panToImage(${index})">`)
-	})
+	//})
 
 	// add featuregroup to map
-	markers.addTo(map)
+	//markers.addTo(map)
 
 	// fit map to markers
-	map.fitBounds(markers.getBounds())
+	//map.fitBounds(markers.getBounds())
 }
 
 
