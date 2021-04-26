@@ -27,9 +27,11 @@ function readCSV(path){
 	Papa.parse(path, {
 		header: true,
 		download: true,
-		complete: function(data) {
-			console.log(data);
-			
+		complete: function(csvdata) {
+			console.log(csvdata);
+            // declare variable outside and define it inside a function
+            // now the variable is available globally 
+			csvdata = csvdata;
 		}
 	});
 }
