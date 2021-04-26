@@ -1,8 +1,8 @@
 // Global variables
 let map;
-let lat = 30;
-let lon = -90;
-let zl = 3;
+let lat = 27;
+let lon = -97;
+let zl = 4;
 let markers = L.featureGroup();
 // path to csv data
 let path = "data/bee_images/bee_full.csv";
