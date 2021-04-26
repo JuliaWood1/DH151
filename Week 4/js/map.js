@@ -1,6 +1,6 @@
 // Global variables
 let map;
-let lat = 15;
+let lat = 30;
 let lon = -90;
 let zl = 3;
 let markers = L.featureGroup();
@@ -42,9 +42,9 @@ function mapCSV(data){
 
 	// circle options
 	let circleOptions = {
-		radius: 5,
+		radius: 30,
 		weight: 1,
-		color: 'white',
+		color: 'black',
 		fillColor: 'dodgerblue',
 		fillOpacity: 1
 	}
