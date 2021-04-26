@@ -5,7 +5,7 @@ let lon = 0;
 let zl = 3;
 let markers = L.featureGroup();
 // path to csv data
-let path = "data/bee_images/bee_full.csv";
+let path = "data/dunitz.csv";
 
 // initialize
 $( document ).ready(function() {
@@ -50,25 +50,25 @@ function mapCSV(data){
 	}
 
 	// loop through each entry
-	//data.data.forEach(function(item,index){
+	data.data.forEach(function(item,index){
 		// create a marker
-		//let marker = L.circleMarker([item.Latitude, item.Longitude],circleOptions)
-		//.on('mouseover',function(){
-		//	this.bindPopup(`${item.subspecies}<br><img src="bee_images/bee_imgs${item.file}">`).openPopup()
-		//})
+		let marker = L.circleMarker([item.latitude,item.longitude],circleOptions)
+		.on('mouseover',function(){
+			this.bindPopup(`${item.title}<br><img src="${item.thumbnail_url}">`).openPopup()
+		})
 
 		// add marker to featuregroup
-		//markers.addLayer(marker)
+		markers.addLayer(marker)
 
 		// add entry to sidebar
-		//$('.sidebar').append(`<img src="${item.file}" onmouseover="panToImage(${index})">`)
-	//})
+		$('.sidebar').append(`<img src="${item.thumbnail_url}" onmouseover="panToImage(${index})">`)
+	})
 
 	// add featuregroup to map
-	//markers.addTo(map)
+	markers.addTo(map)
 
 	// fit map to markers
-	//map.fitBounds(markers.getBounds())
+	map.fitBounds(markers.getBounds())
 }
 
 
