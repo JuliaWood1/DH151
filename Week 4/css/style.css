@@ -27,10 +27,10 @@ body {
 }
 
 .sidebar {
-	color: rgb(230, 220, 84);
+	color: white;
 	grid-area: sidebar;
 	padding:10px;
-	background-color: #555;
+	background-color: rgb(224, 201, 95);
 	overflow: auto;
 }
 
