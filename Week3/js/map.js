@@ -8,6 +8,7 @@ var markers5 = [
 	'description' : 'The capital city of Vietnam with beauitful tree lined streets. It was 104 degrees and humid the second day we were here, a sorcher!',
 	'dates': 'June 3rd - 4th, 2017',
 	'url' : 'hanoi.jpeg',
+	//'url1' : 'hanoi1.jpeg',
 	'lat': 21.0278,
 	'lon': 105.8342
 },
@@ -76,7 +77,7 @@ let myMarkers = L.featureGroup();
 markers5.forEach(function(item, index){
 		let popup = L.popup().setContent(
 			`<hr>${item.title} : ${item.dates}</hr>  <br /><br />${item.description}
-			<br /> <br /> <img src = ${item.url} height=40%  width = 40%>`
+			<br /> <br /> <img src = ${item.url} height=40%  width = 40%>` // <img align = "right" src = ${item.url1} height=40%  width = 40%>`
 		);
 		let marker = L.marker([item.lat, item.lon]).addTo(map).bindPopup(popup).openPopup();
 		console.log('The latitude for ' + item.title + ' is ' + item.lat)
