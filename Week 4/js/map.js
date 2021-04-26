@@ -1,6 +1,6 @@
 // Global variables
 let map;
-let lat = 27;
+let lat = 40;
 let lon = -97;
 let zl = 4;
 let markers = L.featureGroup();
