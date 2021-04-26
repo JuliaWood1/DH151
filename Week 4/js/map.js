@@ -55,14 +55,14 @@ function mapCSV(data){
 		let marker = L.circleMarker([item.Latitude,item.Longitude],circleOptions)
 		
 		.on('mouseover',function(){
-			this.bindPopup(`${item.subspecies}<br><img src="${item.html_url}">`).openPopup()
+			this.bindPopup(`${item.subspecies}<br><img src="data/bee_images/bee_imgs/bee_imgs${item.file}">`).openPopup()
 		})
 
 		// add marker to featuregroup
 		markers.addLayer(marker)
 
 		// add entry to sidebar
-		$('.sidebar').append(`<img src="${item.html_url}" onmouseover="panToImage([${item.Latitude},${item.Longitude}])">`)
+		$('.sidebar').append(`<img src="data/bee_images/bee_imgs/bee_imgs${item.file}" onmouseover="panToImage([${item.Latitude},${item.Longitude}])">`)
 	})
 
 	// add featuregroup to map
