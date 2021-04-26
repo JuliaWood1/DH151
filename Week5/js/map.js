@@ -49,6 +49,8 @@ function mapCSV(date){
 
 
     markers.clearLayers();
+
+    $('.sidebar-title').html(date);
 	// loop through every row in the csv data
 	csvdata.data.forEach(function(item,index){
 
