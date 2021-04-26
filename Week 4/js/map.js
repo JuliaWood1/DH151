@@ -5,7 +5,7 @@ let lon = 0;
 let zl = 3;
 let markers = L.featureGroup();
 // path to csv data
-let path = "data/dunitz.csv";
+let path = "data/bee_images/bee_full.csv";
 
 // initialize
 $( document ).ready(function() {
@@ -52,7 +52,7 @@ function mapCSV(data){
 	// loop through each entry
 	data.data.forEach(function(item,index){
 		// create a marker
-		let marker = L.circleMarker([item.latitude,item.longitude],circleOptions)
+		let marker = L.circleMarker([item.Latitude,item.Longitude],circleOptions)
 		.on('mouseover',function(){
 			this.bindPopup(`${item.title}<br><img src="${item.thumbnail_url}">`).openPopup()
 		})
