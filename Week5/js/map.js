@@ -37,7 +37,7 @@ function readCSV(path){
 
 			// get the last date and put it in a global variable
 			lastdate = csvdata.meta.fields[csvdata.meta.fields.length-1];
-
+            createSidebarButtons();
 			// map the data for the given date
 			mapCSV(lastdate);
 		}
@@ -97,4 +97,16 @@ function getRadiusSize(value){
 	// per pixel if 100 pixel is the max range
 	perpixel = max/100;
 	return value/perpixel
+}
+
+function createSidebarButtons(){
+
+	// put all available dates into an array
+	// using slice to remove first 4 columns which are not dates
+	let dates = csvdata.meta.fields.slice(4)
+
+	// loop through each date and create a hover-able button
+	dates.forEach(function(item,index){
+		$('.sidebar').append(`<span onmouseover="mapCSV('${item}')" class="sidebar-item" title="${item}">●</span>`)
+	})
 }
