@@ -5,7 +5,7 @@ let lon = -97;
 let zl = 4;
 let markers = L.featureGroup();
 // path to csv data
-let path = "/data/bee_full.csv";
+let path = "/data/bee_images/bee_full.csv";
 
 // initialize
 $( document ).ready(function() {
@@ -54,14 +54,14 @@ function mapCSV(data){
 		// create a marker
 		let marker = L.circleMarker([item.Latitude,item.Longitude],circleOptions)
 		.on('mouseover',function(){
-			this.bindPopup(`${item.subspecies}<br><img src="${item.html_url}">`).openPopup()
+			this.bindPopup(`${item.subspecies}<br><img src="/data/bee_images/bee_imgs/bee_imgs/${item.file}">`).openPopup()
 		})
 
 		// add marker to featuregroup
 		markers.addLayer(marker)
 
 		// add entry to sidebar
-		$('.sidebar').append(`<img src="${item.html_url}" onmouseover="panToImage(${index})">`)
+		$('.sidebar').append(`<img src="/data/bee_images/bee_imgs/bee_imgs/${item.file}" onmouseover="panToImage(${index})">`)
 	})
 
 	// add featuregroup to map
