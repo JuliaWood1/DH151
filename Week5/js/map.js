@@ -6,6 +6,7 @@ let zl = 3;
 let path = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv';
 let csvdata;
 let markers = L.featureGroup();
+let lastdate;
 
 // initialize
 $( document ).ready(function() {
@@ -31,42 +32,44 @@ function readCSV(path){
 			console.log(data);
             // declare variable outside and define it inside a function
             // now the variable is available globally 
+			// put the data in a global variable
 			csvdata = data;
 
-            mapCSV()
+			// get the last date and put it in a global variable
+			lastdate = csvdata.meta.fields[csvdata.meta.fields.length-1];
+
+			// map the data for the given date
+			mapCSV(lastdate);
 		}
 	});
 }
 
 
-function mapCSV(){
+function mapCSV(date){
 
-    // circle options
-	let circleOptions = {
-		radius: 10,
-		weight: 1,
-		color: 'dodgerblud',
-		fillColor: 'dodgerblue',
-		fillOpacity: 1
-	}
 
+    markers.clearLayers();
 	// loop through every row in the csv data
 	csvdata.data.forEach(function(item,index){
+
+        // circle options
+        let circleOptions = {
+            radius: 7,
+            weight: 1,
+            color: 'white',
+            fillColor: 'red',
+            fillOpacity: .4,
+            radius: getRadiusSize(item[date])
+        }
 		// check to make sure the Latitude column exists
 		if(item.Lat != undefined){
 			// Lat exists, so create a circleMarker for each country
-            let marker = L.circleMarker([item.Lat,item.Long],circleOptions)
-		    .on('mouseover',function(){
-			this.bindPopup().openPopup()
-		    })
+            let marker = L.circleMarker([item.Lat,item.Long],circleOptions).on('mouseover', function(){
+                this.bindPopup(`${item['Country/Region']}<br> Confirmed cases on ${date}: ${item[date]}`).openPopup()
+            })
 
-		// add marker to featuregroup
-		markers.addLayer(marker)
-
-		// add entry to sidebar
-		$('.sidebar').append()
-
-		// add the circleMarker to the featuregroup
+		    // add marker to featuregroup
+		    markers.addLayer(marker)
 
 		} // end if
 	})
@@ -76,4 +79,22 @@ function mapCSV(){
 
 	// fit the circleMarkers to the map view
     map.fitBounds(markers.getBounds())
+}
+
+function getRadiusSize(value){
+
+	let values = [];
+
+	// get the min and max
+	csvdata.data.forEach(function(item,index){
+		if(item[lastdate] != undefined){
+			values.push(Number(item[lastdate]))
+		}
+	})
+	let min = Math.min(...values);
+	let max = Math.max(...values)
+	
+	// per pixel if 100 pixel is the max range
+	perpixel = max/100;
+	return value/perpixel
 }
