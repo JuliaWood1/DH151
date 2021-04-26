@@ -54,7 +54,7 @@ function mapCSV(data){
 		// create a marker
 		let marker = L.circleMarker([item.Latitude,item.Longitude],circleOptions)
 		.on('mouseover',function(){
-			this.bindPopup(`${item.subspecies}<br><img src="data/bee_images/bee_imgs/bee_imgs/${item.file}">`).openPopup()
+			this.bindPopup(`${item.subspecies} in ${item.location}<br><img src="data/bee_images/bee_imgs/bee_imgs/${item.file}">`).openPopup()
 		})
 
 		// add marker to featuregroup
