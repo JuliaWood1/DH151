@@ -42,8 +42,8 @@ function mapCSV(data){
 
 	// circle options
 	let circleOptions = {
-		radius: 30,
-		weight: 1,
+		radius: 10,
+		weight: 10,
 		color: 'black',
 		fillColor: 'dodgerblue',
 		fillOpacity: 1
@@ -54,7 +54,7 @@ function mapCSV(data){
 		// create a marker
 		let marker = L.circleMarker([item.Latitude,item.Longitude],circleOptions)
 		.on('mouseover',function(){
-			this.bindPopup(`${item.subspecies} in ${item.location}<br><img src="/data/bee_images/bee_imgs/bee_imgs/${item.file}">`).openPopup()
+			this.bindPopup(`${item.subspecies}<br><img src="/data/bee_images/bee_imgs/bee_imgs/${item.file}">`).openPopup()
 		})
 
 		// add marker to featuregroup
@@ -74,7 +74,7 @@ function mapCSV(data){
 
 function panToImage(index){
 	// zoom to level 17 first
-	map.setZoom(17);
+	map.setZoom(9);
 	// pan to the marker
 	map.panTo(markers.getLayers()[index]._latlng);
 }
