@@ -5,7 +5,7 @@ let lon = -97;
 let zl = 4;
 let markers = L.featureGroup();
 // path to csv data
-let path = "bee_full.csv";
+let path = "/data/bee_full.csv";
 
 // initialize
 $( document ).ready(function() {
