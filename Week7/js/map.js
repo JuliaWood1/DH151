@@ -14,6 +14,11 @@ let geojson_layer;
 let brew = new classyBrew();
 let fieldtomap;
 
+let legend = L.control({position: 'bottomright'});
+
+let info_panel = L.control();
+
+
 // initialize
 $( document ).ready(function() {
     createMap(lat,lon,zl);
@@ -83,12 +88,19 @@ function mapGeoJSON(field){
 	brew.setColorCode('YlOrRd'); // yellow orange red
 	brew.classify('quantiles'); // quantiles to create division
 
-	// create the layer and add to map
-	geojson_layer = L.geoJson(geojson_data, {
-		style: getStyle //call a function to style each feature
+	// create the geojson layer
+	geojson_layer = L.geoJson(geojson_data,{
+		style: getStyle,
+		onEachFeature: onEachFeature // actions on each feature
 	}).addTo(map);
 
 	map.fitBounds(geojson_layer.getBounds())
+
+    // create the legend
+	createLegend();
+
+    // create the infopanel
+	createInfoPanel();
 }
 
 function getStyle(feature){
@@ -113,4 +125,90 @@ function getColor(d) {
 		   d > 20000000   ? '#FEB24C' :
 		   d > 10000000   ? '#FED976' :
 					  '#FFEDA0';
+}
+
+function createLegend(){
+	legend.onAdd = function (map) {
+		var div = L.DomUtil.create('div', 'info legend'),
+		breaks = brew.getBreaks(),
+		labels = [],
+		from, to;
+		
+		for (var i = 0; i < breaks.length; i++) {
+			from = breaks[i];
+			to = breaks[i + 1];
+			if(to) {
+				labels.push(
+					'<i style="background:' + brew.getColorInRange(from) + '"></i> ' +
+					from.toFixed(2) + ' &ndash; ' + to.toFixed(2));
+				}
+			}
+			
+			div.innerHTML = labels.join('<br>');
+			return div;
+		};
+		
+		legend.addTo(map);
+}
+
+// Function that defines what will happen on user interactions with each feature
+function onEachFeature(feature, layer) {
+	layer.on({
+		mouseover: highlightFeature,
+		mouseout: resetHighlight,
+		click: zoomToFeature
+	});
+}
+
+// on mouse over, highlight the feature
+function highlightFeature(e) {
+	var layer = e.target;
+
+	// style to use on mouse over
+	layer.setStyle({
+		weight: 2,
+		color: '#666',
+		fillOpacity: 0.7
+	});
+
+	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+		layer.bringToFront();
+	}
+
+    info_panel.update(layer.feature.properties)
+}
+
+// on mouse out, reset the style, otherwise, it will remain highlighted
+function resetHighlight(e) {
+	geojson_layer.resetStyle(e.target);
+    info_panel.update() // resets infopanel
+}
+
+// on mouse click on a feature, zoom in to it
+function zoomToFeature(e) {
+	map.fitBounds(e.target.getBounds());
+}
+
+function createInfoPanel(){
+
+	info_panel.onAdd = function (map) {
+		this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+		this.update();
+		return this._div;
+	};
+
+	// method that we will use to update the control based on feature properties passed
+	info_panel.update = function (properties) {
+		// if feature is highlighted
+		if(properties){
+			this._div.innerHTML = `<b>${properties.name}</b><br>${fieldtomap}: ${properties[fieldtomap]}`;
+		}
+		// if feature is not highlighted
+		else
+		{
+			this._div.innerHTML = 'Hover over a country';
+		}
+	};
+
+	info_panel.addTo(map);
 }
