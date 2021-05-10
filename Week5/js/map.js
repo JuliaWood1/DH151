@@ -50,7 +50,10 @@ function mapCSV(date){
 
     markers.clearLayers();
 
-    $('.sidebar-title').html(date);
+    $('.sidebar-title').html(date); // html instead of append
+    // difference between append
+    // append will tack on to whatever exists already in that div
+    // html replaces instead of appending
 	// loop through every row in the csv data
 	csvdata.data.forEach(function(item,index){
 
@@ -110,5 +113,6 @@ function createSidebarButtons(){
 	// loop through each date and create a hover-able button
 	dates.forEach(function(item,index){
 		$('.sidebar').append(`<span onmouseover="mapCSV('${item}')" class="sidebar-item" title="${item}">●</span>`)
+        // appending a circle to every date
 	})
 }
