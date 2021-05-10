@@ -59,12 +59,12 @@ function getGeoJSON(){
 		geojson_data = data;
 
 		// call the map function
-		mapGeoJSON('pop_est') // add a field to be used
+		mapGeoJSON('pop_est', 8, 'YlOrRd') // add a field to be used
 	})
 }
 
 // function to map a geojson file
-function mapGeoJSON(field){
+function mapGeoJSON(field, num_classes, color_scheme){
 
 	// clear layers in case it has been mapped already
 	if (geojson_layer){
@@ -84,8 +84,8 @@ function mapGeoJSON(field){
 
 	// set up the "brew" options
 	brew.setSeries(values);
-	brew.setNumClasses(5);
-	brew.setColorCode('YlOrRd'); // yellow orange red
+	brew.setNumClasses(num_classes);
+	brew.setColorCode(color_scheme); // yellow orange red
 	brew.classify('quantiles'); // quantiles to create division
 
 	// create the geojson layer
