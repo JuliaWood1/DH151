@@ -139,7 +139,7 @@ function createLegend(){
 			to = breaks[i + 1];
 			if(to) {
 				labels.push(
-					'<i style="background:' + brew.getColorInRange(from) + '"></i> ' +
+					'<i style="background:' + brew.getColorInRange(to) + '"></i> ' +
 					from.toFixed(2) + ' &ndash; ' + to.toFixed(2));
 				}
 			}
