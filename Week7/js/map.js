@@ -12,6 +12,7 @@ let geojson_data;
 let geojson_layer;
 
 let brew = new classyBrew();
+let fieldtomap;
 
 // initialize
 $( document ).ready(function() {
@@ -73,14 +74,14 @@ function mapGeoJSON(field){
 
 	// based on the provided field, enter each value into the array
 	geojson_data.features.forEach(function(item,index){
-		values.push(item.properties[field])
+		values.push(item.properties[field]) // populate your array
 	})
 
 	// set up the "brew" options
 	brew.setSeries(values);
 	brew.setNumClasses(5);
-	brew.setColorCode('YlOrRd');
-	brew.classify('quantiles');
+	brew.setColorCode('YlOrRd'); // yellow orange red
+	brew.classify('quantiles'); // quantiles to create division
 
 	// create the layer and add to map
 	geojson_layer = L.geoJson(geojson_data, {
