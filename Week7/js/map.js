@@ -59,7 +59,7 @@ function getGeoJSON(){
 		geojson_data = data;
 
 		// call the map function
-		mapGeoJSON('pop_est', 8, 'YlOrRd') // add a field to be used
+		mapGeoJSON('pop_est', 8, 'YlGnBu') // add a field to be used
 	})
 }
 
