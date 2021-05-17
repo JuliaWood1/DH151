@@ -59,7 +59,7 @@ function getGeoJSON(){
 		geojson_data = data;
 
 		// call the map function
-		mapGeoJSON('Total mismanaged plastic waste in 2010', 5, 'Reds') // add a field to be used
+		mapGeoJSON('Total mismanaged plastic waste in 2010', 7, 'Reds') // add a field to be used
 	})
 }
 
