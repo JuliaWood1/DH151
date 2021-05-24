@@ -174,6 +174,56 @@ function highlightFeature(e) {
 
 }
 
+function createDashboard(properties){
+
+	// clear dashboard
+	$('.dashboard').empty();
+
+	console.log(properties)
+
+	// chart title
+	let title = 'Household Income in ' + properties['Qualifying Name'];
+
+	// data values
+	let data = [properties['% Households: Less than $25,000'],
+	properties['% Households: $25,000 to $49,999'],
+	properties['% Households: $50,000 to $74,999'],
+	properties['% Households: $75,000 to $99,999'],
+	properties['% Households: $100,000 or More']
+	 ];
+
+	// data fields
+	let fields = ['Less than $25,000','$25,000 to $49,999','$50,000 to $74,999','$75,000 to $99,999', '$100,000 or More'];
+
+	//set chart options
+	let options = {
+		chart: {
+			type: 'pie',
+			height: 400,
+			width: 400,			
+			animations: {
+				enabled: false,
+			}
+		},
+		title: {
+			text: title,
+		},
+		series: data,
+		labels: fields,
+		legend: {
+			position: 'right',
+			offsetY: 0,
+			height: 230,
+		  }
+	};
+
+	
+	// create the chart
+	let chart = new ApexCharts(document.querySelector('.dashboard'), options)
+	chart.render()
+}
+
+
 // on mouse out, reset the style, otherwise, it will remain highlighted
 function resetHighlight(e) {
 	geojson_layer.resetStyle(e.target);
