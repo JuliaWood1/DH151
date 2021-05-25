@@ -83,6 +83,9 @@ function mapGeoJSON(field,num_classes,color,scheme){
 
 	// create the infopanel
 	createInfoPanel();
+
+	// create table
+	createTable();
 }
 
 function getStyle(feature){
@@ -174,6 +177,17 @@ function highlightFeature(e) {
 
 }
 
+// on mouse out, reset the style, otherwise, it will remain highlighted
+function resetHighlight(e) {
+	geojson_layer.resetStyle(e.target);
+	info_panel.update() // resets infopanel
+}
+
+// on mouse click on a feature, zoom in to it
+function zoomToFeature(e) {
+	map.fitBounds(e.target.getBounds());
+}
+
 function createDashboard(properties){
 
 	// clear dashboard
@@ -185,28 +199,61 @@ function createDashboard(properties){
 	let title = 'Household Income in ' + properties['Qualifying Name'];
 
 	// data values
-	let data = [properties['% Households: Less than $25,000'],
-	properties['% Households: $25,000 to $49,999'],
-	properties['% Households: $50,000 to $74,999'],
-	properties['% Households: $75,000 to $99,999'],
-	properties['% Households: $100,000 or More']
-	 ];
-
+	let data = [
+		properties['% Households: Less than $25,000'],
+		properties['% Households: $25,000 to $49,999'],
+		properties['% Households: $50,000 to $74,999'],
+		properties['% Households: $75,000 to $99,999'],
+		properties['% Households: $100,000 or More'],
+	]
+	
 	// data fields
-	let fields = ['Less than $25,000','$25,000 to $49,999','$50,000 to $74,999','$75,000 to $99,999', '$100,000 or More'];
+	let fields = [
+		'% Less than $25,000',
+		'% $25,000 to $49,999',
+		'% $50,000 to $74,999',
+		'% $75,000 to $99,999',
+		'% $100,000 or More',
+	]
 
-	//set chart options
-	let options = {
+	// chart options
+	var options = {
 		chart: {
-			type: 'pie',
-			height: 400,
-			width: 400,			
+			type: 'bar',
+			height: 300,
 			animations: {
 				enabled: false,
 			}
 		},
 		title: {
-			text: title,
+			text: title
+		},
+		plotOptions: {
+			bar: {
+				horizontal: true
+			}
+		},
+		series: [
+			{
+				data: data
+			}
+		],
+		xaxis: {
+			categories: fields
+		}
+	}
+	
+	var options2 = {
+		chart: {
+			type: 'pie',
+			height: 300,
+			width: '100%',			
+			animations: {
+				enabled: false,
+			}
+		},
+		title: {
+			text: 'Household Income in ' + properties['Qualifying Name'],
 		},
 		series: data,
 		labels: fields,
@@ -217,20 +264,53 @@ function createDashboard(properties){
 		  }
 	};
 
-	
-	// create the chart
-	let chart = new ApexCharts(document.querySelector('.dashboard'), options)
+	var chart = new ApexCharts(document.querySelector('.dashboard'), options)
 	chart.render()
+  
 }
 
+function createTable(){
 
-// on mouse out, reset the style, otherwise, it will remain highlighted
-function resetHighlight(e) {
-	geojson_layer.resetStyle(e.target);
-	info_panel.update() // resets infopanel
+	let datafortable = [];
+
+	geojson_data.features.forEach(function(item){
+		datafortable.push(item.properties)
+	})
+	console.log(datafortable)
+
+	let fields = [
+		{ name: "Qualifying Name", type: "text"},
+		{ name: '% Households: Less than $25,000', type: 'number'},
+		{ name: '% Households: $100,000 or More', type: 'number'},
+		{ name: 'Median Household Income (In 2019 Inflation Adjusted Dollars)', type: 'number'},
+	]
+ 
+	$(".footer").jsGrid({
+		width: "100%",
+		height: "400px",
+		
+		editing: true,
+		sorting: true,
+		paging: true,
+		autoload: true,
+ 
+		pageSize: 10,
+		pageButtonCount: 5,
+ 
+		data: datafortable,
+		fields: fields,
+		rowClick: function(args) { 
+			console.log(args)
+			zoomTo(args.item.GEO_ID)
+		},
+	});
 }
 
-// on mouse click on a feature, zoom in to it
-function zoomToFeature(e) {
-	map.fitBounds(e.target.getBounds());
+function zoomTo(geoid){
+
+	let zoom2poly = geojson_layer.getLayers().filter(item => item.feature.properties.GEO_ID === geoid)
+
+	map.fitBounds(zoom2poly[0].getBounds())
+
 }
+
