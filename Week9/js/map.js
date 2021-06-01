@@ -6,7 +6,7 @@ let zl = 10;
 let path = '';
 let markers = L.featureGroup();
 
-let geojsonPath = 'data/pollution.json';
+let geojsonPath = 'data/rank_pollution.json';
 let geojson_data;
 let geojson_layer;
 
@@ -14,7 +14,7 @@ let brew = new classyBrew();
 let legend = L.control({position: 'bottomright'});
 let info_panel = L.control();
 
-let fieldtomap = 'Total mismanaged plastic waste in 2010';
+let fieldtomap = 'plastic_waste_2010';
 
 
 
@@ -153,7 +153,7 @@ function createInfoPanel(){
 	info_panel.update = function (properties) {
 		// if feature is highlighted
 		if(properties){
-			this._div.innerHTML = `<b>${properties['Entity']}</b><br>${fieldtomap}: ${properties[fieldtomap]}`;
+			this._div.innerHTML = `<b>${properties['country']}</b><br>${fieldtomap}: ${properties[fieldtomap]}`;
 		}
 		// if feature is not highlighted
 		else
@@ -214,12 +214,12 @@ function createDashboard(properties){
 	console.log(properties)
 
 	// chart title
-	let title = 'Gross Domestic Product (GDP) & Population in ' + properties['Entity'];
+	let title = 'Gross Domestic Product (GDP) & Population in ' + properties['country'];
 
 	// data values
 	let data = [
 		properties['gdp_md_est'],
-		properties['Total mismanaged plastic waste in 2010']
+		properties['plastic_waste_2010']
 	]
 	
 	// data fields
@@ -265,7 +265,7 @@ function createDashboard(properties){
 			}
 		},
 		title: {
-			text: 'Gross Domestic Product (GDP) in: ' + properties['Entity'],
+			text: 'Gross Domestic Product (GDP) in: ' + properties['country'],
 		},
 		series: data,
 		labels: fields,
@@ -292,7 +292,7 @@ function createTable(){
 	console.log(datafortable)
 
 	let fields = [
-		{ name: "Entity", type: "text"},
+		{ name: "country", type: "text"},
 		{ name: 'gdp_md_est', type: 'number'},
 		{ name: fieldtomap, type: 'number'},
 	]
