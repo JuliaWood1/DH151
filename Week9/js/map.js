@@ -1,10 +1,12 @@
 // Global variables
 let map;
-let lat = 39;
-let lon = -98;
-let zl = 4;
+let lat = 0;
+let lon = 0;
+let zl = 10;
+let path = '';
+let markers = L.featureGroup();
 
-let geojsonPath = 'data/merged.geojson';
+let geojsonPath = 'data/pollution.json';
 let geojson_data;
 let geojson_layer;
 
@@ -12,12 +14,15 @@ let brew = new classyBrew();
 let legend = L.control({position: 'bottomright'});
 let info_panel = L.control();
 
-let fieldtomap = 'Median Household Income (In 2019 Inflation Adjusted Dollars)';
+let fieldtomap = 'Total mismanaged plastic waste in 2010';
+
+
 
 // initialize
 $( document ).ready(function() {
 	createMap(lat,lon,zl);
 	getGeoJSON();
+	readCSV(path);
 });
 
 // create the map
@@ -27,6 +32,20 @@ function createMap(lat,lon,zl){
 	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
+}
+
+// function to read csv data
+function readCSV(path){
+	Papa.parse(path, {
+		header: true,
+		download: true,
+		complete: function(csvdata) {
+			console.log(csvdata);
+			
+			// map the csvdata
+			mapCSV(csvdata);
+		}
+	});
 }
 
 // function to get the geojson data
@@ -39,7 +58,7 @@ function getGeoJSON(){
 		geojson_data = data;
 
 		// call the map function
-		mapGeoJSON(fieldtomap,5,'YlOrRd','quantiles');
+		mapGeoJSON(fieldtomap, 7, 'Reds') // add a field to be used
 	})
 }
 
@@ -75,8 +94,7 @@ function mapGeoJSON(field,num_classes,color,scheme){
 		onEachFeature: onEachFeature // actions on each feature
 	}).addTo(map);
 
-	// turning off fit bounds so that we stay in mainland USA
-	// map.fitBounds(geojson_layer.getBounds())
+	map.fitBounds(geojson_layer.getBounds())
 
 	// create the legend
 	createLegend();
@@ -135,7 +153,7 @@ function createInfoPanel(){
 	info_panel.update = function (properties) {
 		// if feature is highlighted
 		if(properties){
-			this._div.innerHTML = `<b>${properties['Qualifying Name']}</b><br>${fieldtomap}: ${properties[fieldtomap]}`;
+			this._div.innerHTML = `<b>${properties['Entity']}</b><br>${fieldtomap}: ${properties[fieldtomap]}`;
 		}
 		// if feature is not highlighted
 		else
@@ -196,24 +214,18 @@ function createDashboard(properties){
 	console.log(properties)
 
 	// chart title
-	let title = 'Household Income in ' + properties['Qualifying Name'];
+	let title = 'Gross Domestic Product (GDP) & Population in ' + properties['Entity'];
 
 	// data values
 	let data = [
-		properties['% Households: Less than $25,000'],
-		properties['% Households: $25,000 to $49,999'],
-		properties['% Households: $50,000 to $74,999'],
-		properties['% Households: $75,000 to $99,999'],
-		properties['% Households: $100,000 or More'],
+		properties['gdp_md_est'],
+		properties['Total mismanaged plastic waste in 2010']
 	]
 	
 	// data fields
 	let fields = [
-		'% Less than $25,000',
-		'% $25,000 to $49,999',
-		'% $50,000 to $74,999',
-		'% $75,000 to $99,999',
-		'% $100,000 or More',
+		'GDP Estimate (2010)',
+		'Total Mismanaged Plastic Waste',
 	]
 
 	// chart options
@@ -253,7 +265,7 @@ function createDashboard(properties){
 			}
 		},
 		title: {
-			text: 'Household Income in ' + properties['Qualifying Name'],
+			text: 'Gross Domestic Product (GDP) in: ' + properties['Entity'],
 		},
 		series: data,
 		labels: fields,
@@ -271,7 +283,8 @@ function createDashboard(properties){
 
 function createTable(){
 
-	let datafortable = [];
+	let datafortable = [
+	];
 
 	geojson_data.features.forEach(function(item){
 		datafortable.push(item.properties)
@@ -279,10 +292,9 @@ function createTable(){
 	console.log(datafortable)
 
 	let fields = [
-		{ name: "Qualifying Name", type: "text"},
-		{ name: '% Households: Less than $25,000', type: 'number'},
-		{ name: '% Households: $100,000 or More', type: 'number'},
-		{ name: 'Median Household Income (In 2019 Inflation Adjusted Dollars)', type: 'number'},
+		{ name: "Entity", type: "text"},
+		{ name: 'gdp_md_est', type: 'number'},
+		{ name: fieldtomap, type: 'number'},
 	]
  
 	$(".footer").jsGrid({
