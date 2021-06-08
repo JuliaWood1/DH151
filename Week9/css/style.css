@@ -15,7 +15,7 @@ body {
 	grid-template-areas: 
 	"header header"
 	"content dashboard"
-	"footer footer";
+	"footer footer"
 }
 
 .dashboard {
